@@ -24,4 +24,4 @@ WHERE
     job_title_short = 'Data Scientist'
 ORDER BY    
     salary_year_avg DESC
-LIMIT 30
+LIMIT 10
