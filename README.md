@@ -197,3 +197,66 @@ Insights on Top-Paying Skills for Data and Technology Professionals:
 |kubernetes|123454.67       |
 
 *Table presenting the top 10 best paid skills in the Data Science industry*
+
+# 5. Most Optimal Skills to Learn 
+Combining insights from demand and salary data, this query aimed to pinpoint skills that are both in high demand and have high salaries, offering a strategic focus for skill development.
+
+```sql
+-- Create a CTE that contains only the data from the countries in the European Union
+WITH EU_jobs AS(
+    SELECT *
+    FROM job_postings_fact
+    WHERE 
+    job_country IN ('Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 
+                    'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Ireland', 'Italy', 
+                    'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands', 'Poland', 'Portugal', 
+                    'Romania', 'Slovakia', 'Slovenia', 'Spain', 'Sweden')
+)
+
+-- Find the best paid skills for DATA SCIENTISTS in the EU
+SELECT
+    sd.skills,
+    ROUND(avg(salary_year_avg), 2 ) as total_salary,
+    COUNT(eu.job_id) as Demand_count
+FROM EU_jobs eu left join skills_job_dim sjd ON
+    eu.job_id = sjd.job_id inner join skills_dim sd ON
+    sjd.skill_id = sd.skill_id
+WHERE
+    job_title_short = 'Data Scientist' AND
+    salary_year_avg IS NOT NULL
+GROUP BY
+    sd.skills
+HAVING 
+    COUNT(eu.job_id) > 10
+ORDER BY
+    Demand_count DESC,
+    total_salary DESC
+LIMIT 10
+```
+
+
+| Skills   |Demand Count| Average Salary |
+|----------|------------|----------------|
+|python    |183         |116950.21       |
+|sql       |120         |119255.80       |  
+|r         |57          |113120.62       |
+|spark     |48          |117688.67       |
+|tableau   |46          |122875.79       |
+|aws       |37          |134521.03       |
+|azure     |37          |124559.46       |
+|tensorflow|34          |120000.72       |
+|pytorch   |32          |119019.45       |
+|scikit    |31          |121510.74       |
+
+Here are the insights:
+
+**Insights on Top-Paying Skills with Demand and Salary Analysis**:
+High Demand with Competitive Salaries: **Python** ($116,950.21, demand count: 183) and ****SQL** ($119,255.80, demand count: 120) are in high demand, offering competitive salaries. This indicates that these foundational skills are highly valued in the industry and widely sought after.
+
+**Specialized Skills with High Salaries**: **AWS** ($134,521.03, demand count: 37) and **Azure** ($124,559.46, demand count: 37) command high salaries despite lower demand counts compared to Python and SQL. This reflects the premium placed on cloud computing expertise, even if the number of professionals with these skills is relatively smaller.
+
+**Niche Expertise with High Earning Potential**: Skills like **TensorFlow** ($120,000.72, demand count: 34), **PyTorch** ($119,019.45, demand count: 32), and **scikit-learn** ($121,510.74, demand count: 31) offer high salaries in specialized areas of machine learning, demonstrating significant earning potential for niche expertise in advanced analytics and AI tools.
+
+
+# Conclusions 
+With all the insights found during my analysis using SQL, I can strongly say that this project can act as guide to anyone to any european looking for a Data Scientist job or for someone not knowing where to start their own journey to becoming a Data Scientist.
