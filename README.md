@@ -153,3 +153,47 @@ Here's the breakdown of the most demanded skills for data scientists in 2023
 - The next spots are taken by cloud platforms(**AZURE** and **AWS**) and tools that can run on both of this cloud service providers(**SAS** and **Apache Spark**)
 
 ![Most_in_demand_skills](Charts/Most_in_demand_skills.png)
+
+
+## 4. The best paid skills for Data Scientists 
+
+After we saw what the most in-demand skills are, now we can take a look at what skills have the biggest average salary.
+
+```sql
+-- Find the best paid skills for DATA SCIENTISTS in the EU
+SELECT
+    sd.skills,
+    avg(salary_year_avg) as total_salary
+FROM EU_jobs eu left join skills_job_dim sjd ON
+    eu.job_id = sjd.job_id inner join skills_dim sd ON
+    sjd.skill_id = sd.skill_id
+WHERE
+    job_title_short = 'Data Scientist' AND
+    salary_year_avg IS NOT NULL
+GROUP BY
+    sd.skills
+HAVING 
+    COUNT(eu.job_id) > 10
+ORDER BY
+    total_salary DESC
+```
+
+Insights on Top-Paying Skills for Data and Technology Professionals:
+- **High Salaries for Cloud and Workflow Management**: Skills in AWS ($134,521.03) and Airflow ($134,509.73) highlight the high demand and value of expertise in cloud infrastructure and automated workflow management.
+- **Valuation of Big Data and Machine Learning Tools**: Proficiencies in Hadoop ($128,707.17) and Keras ($128,501.35) reflect the industry's prioritization of big data processing and advanced machine learning capabilities.
+- **Importance of Data Analysis and Visualization**: Skills in Pandas ($124,800.42) and Matplotlib ($127,899.20) emphasize the crucial role of data manipulation and visualization in deriving actionable insights from data.
+ 
+| Skills   | Average Salary |
+|----------|----------------|
+|aws       |134521.03       |
+|airflow   |134509.73       |  
+|hadoop    |128707.17       |
+|keras     |128501.35       |
+|matplotlib|127899.20       |
+|bigquery  |125554.32       |
+|looker    |125313.06       |
+|pandas    |124800.42       |
+|azure     |124559.46       |
+|kubernetes|123454.67       |
+
+*Table presenting the top 10 best paid skills in the Data Science industry*

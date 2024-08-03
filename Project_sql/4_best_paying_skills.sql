@@ -12,7 +12,7 @@ WITH EU_jobs AS(
 -- Find the best paid skills for DATA SCIENTISTS in the EU
 SELECT
     sd.skills,
-    avg(salary_year_avg) as total_salary
+    ROUND(avg(salary_year_avg) , 2) as total_salary
 FROM EU_jobs eu left join skills_job_dim sjd ON
     eu.job_id = sjd.job_id inner join skills_dim sd ON
     sjd.skill_id = sd.skill_id
@@ -25,3 +25,4 @@ HAVING
     COUNT(eu.job_id) > 10
 ORDER BY
     total_salary DESC
+LIMIT 10
