@@ -110,5 +110,46 @@ ORDER BY
 
 
 ![Best_job_skills](Charts\Top_paying_jobs_skill.png)
+This chart was also created using python and the associated libraries.
 
-	
+Here we have the breakdown of the skill demand for the top paying Data Scientist Jobs:
+- **Python** is on the first place with 9 apperances in the top 10 jobs.
+- **SQL** follows shorly after with a count of 7.
+- **AWS** the cloud computing tool is on the 3rd place.
+
+
+## In demand skills for Data Science
+Now that we know what skills are needed for the top paying jobs, we can dive deeper to see what the demand distribution for all the jobs in the EU is.
+```sql
+-- Create a CTE that contains only the data from the countries in the European Union
+WITH EU_jobs AS(
+    SELECT *
+    FROM job_postings_fact
+    WHERE 
+    job_country IN ('Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Denmark', 
+                    'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary', 'Ireland', 'Italy', 
+                    'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands', 'Poland', 'Portugal', 
+                    'Romania', 'Slovakia', 'Slovenia', 'Spain', 'Sweden')
+)
+
+-- Most in demand skills for data scientists in the EU
+
+SELECT
+    sd.skills,
+    count(sd.skills) as total_skill_count
+FROM EU_jobs eu left join skills_job_dim sjd ON
+    eu.job_id = sjd.job_id inner join skills_dim sd ON
+    sjd.skill_id = sd.skill_id
+WHERE
+    job_title_short = 'Data Scientist'
+GROUP BY
+    sd.skills
+ORDER BY
+    total_skill_count DESC
+```
+Here's the breakdown of the most demanded skills for data scientists in 2023
+- **Python** and **SQL** remain on top, with over 25000 and respectively over 15000 data science job postings
+- The programming language **R** takes the third spot with over 10000 postings
+- The next spots are taken by cloud platforms(**AZURE** and **AWS**) and tools that can run on both of this cloud service providers(**SAS** and **Apache Spark**)
+
+![Most_in_demand_skills](Charts/Most_in_demand_skills.png)
