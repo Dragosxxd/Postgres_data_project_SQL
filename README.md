@@ -109,7 +109,7 @@ ORDER BY
 ```
 
 
-![Best_job_skills](Charts\Top_paying_jobs_skill.png)
+![Best_job_skills](Charts/Top_paying_jobs_skill.png)
 This chart was also created using python and the associated libraries.
 
 Here we have the breakdown of the skill demand for the top paying Data Scientist Jobs:
@@ -118,7 +118,7 @@ Here we have the breakdown of the skill demand for the top paying Data Scientist
 - **AWS** the cloud computing tool is on the 3rd place.
 
 
-## In demand skills for Data Science
+## 3. In-demand skills for Data Science
 Now that we know what skills are needed for the top paying jobs, we can dive deeper to see what the demand distribution for all the jobs in the EU is.
 ```sql
 -- Create a CTE that contains only the data from the countries in the European Union
