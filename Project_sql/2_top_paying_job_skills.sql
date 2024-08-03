@@ -27,7 +27,7 @@ WHERE
     job_title_short = 'Data Scientist'
 ORDER BY    
     salary_year_avg DESC
-LIMIT 30) AS top_30 INNER JOIN skills_job_dim sjd ON 
+LIMIT 10) AS top_30 INNER JOIN skills_job_dim sjd ON 
         top_30.job_id = sjd.job_id INNER JOIN skills_dim sd ON
         sjd.skill_id = sd.skill_id
 GROUP BY
